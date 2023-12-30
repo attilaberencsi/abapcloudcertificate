@@ -20,6 +20,11 @@ CLASS zcl_access_to_released_object IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
     SELECT * FROM ZI_Country INTO TABLE @DATA(countries).
     out->write( data = countries ).
+
+    SELECT SINGLE FROM zi_country
+    FIELDS *
+    INTO @DATA(country).
+
   ENDMETHOD.
 
 ENDCLASS.
