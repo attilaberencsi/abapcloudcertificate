@@ -8,7 +8,9 @@ CLASS lhc_connection DEFINITION INHERITING FROM cl_abap_behavior_handler.
       CheckSemanticKey FOR VALIDATE ON SAVE
         IMPORTING keys FOR Connection~CheckSemanticKey,
       CheckOriginDestination FOR VALIDATE ON SAVE
-        IMPORTING keys FOR Connection~CheckOriginDestination.
+        IMPORTING keys FOR Connection~CheckOriginDestination,
+      GetCities FOR DETERMINE ON SAVE
+        IMPORTING keys FOR Connection~GetCities.
 ENDCLASS.
 
 CLASS lhc_connection IMPLEMENTATION.
@@ -90,6 +92,41 @@ CLASS lhc_connection IMPLEMENTATION.
 
       APPEND VALUE #( %tky = connection-%tky ) TO failed-connection.
     ENDLOOP.
+  ENDMETHOD.
+
+  METHOD GetCities.
+    READ ENTITIES OF zr_ati_aconn IN LOCAL MODE
+         ENTITY Connection
+         FIELDS ( AirportFromID AirportToID )
+         WITH CORRESPONDING #( keys )
+         RESULT DATA(connections).
+
+    LOOP AT connections INTO DATA(connection).
+      SELECT SINGLE FROM /DMO/I_Airport
+        FIELDS city, CountryCode
+        WHERE AirportID = @connection-AirportFromID
+        INTO ( @connection-CityFrom, @connection-CountryTo ).
+
+      SELECT SINGLE FROM /DMO/I_Airport
+        FIELDS city,
+               CountryCode
+        WHERE AirportID = @connection-AirportToID
+        INTO ( @connection-CityTo, @connection-CountryTo ).
+
+      MODIFY connections FROM connection.
+    ENDLOOP.
+
+    DATA connections_update TYPE TABLE FOR UPDATE zr_ati_aconn.
+    connections_update = CORRESPONDING #( connections ).
+
+    MODIFY ENTITIES OF zr_ati_aconn IN LOCAL MODE
+           ENTITY Connection
+           UPDATE
+           FIELDS ( CityFrom CountryFrom CityTo CountryTo )
+           WITH connections_update
+           REPORTED DATA(reported_records).
+
+    reported-connection = CORRESPONDING #( reported_records-connection ).
   ENDMETHOD.
 
 ENDCLASS.

@@ -26,6 +26,8 @@ authorization master ( global )
   update;
   delete;
 
+  determination GetCities on save { field airportFromID, AirportToID; }
+
   validation CheckSemanticKey on save { create; update; }
   validation CheckOriginDestination on save { create; field AirportFromID, AirportToID; }
 
