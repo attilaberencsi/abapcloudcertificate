@@ -1,0 +1,4 @@
+@EndUserText.label: 'Service definition for ZC_ATI_CONNECTION'
+define service ZATI_CONNECTION {
+  expose ZC_ATI_CONNECTION as Connection;
+}
