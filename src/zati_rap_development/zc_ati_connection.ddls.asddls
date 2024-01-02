@@ -6,14 +6,15 @@ define root view entity ZC_ATI_CONNECTION
   as projection on ZR_ATI_ACONN
 {
   key UUID,
-  CarrierID,
-  ConnectionID,
-  AirportFromID,
-  CityFrom,
-  CountryFrom,
-  AirportToID,
-  CityTo,
-  CountryTo,
-  LocalLastChangedAt
-  
+      @Consumption.valueHelpDefinition: [{entity: {name: 'ZI_ATI_Carrier_VH', element: 'AirlineID' }, useForValidation: true}]
+      CarrierID,
+      ConnectionID,
+      AirportFromID,
+      CityFrom,
+      CountryFrom,
+      AirportToID,
+      CityTo,
+      CountryTo,
+      LocalLastChangedAt
+
 }

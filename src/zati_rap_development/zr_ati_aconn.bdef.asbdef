@@ -12,6 +12,10 @@ authorization master ( global )
 {
   field ( readonly )
   UUID,
+  CityFrom,
+  CountryFrom,
+  CityTo,
+  CountryTo,
   LocalCreatedAt,
   LocalCreatedBy,
   LastChangedAt,
