@@ -40,14 +40,20 @@ CLASS zcl_ati_eml IMPLEMENTATION.
 
     " UPDATE
     travel_updates = VALUE #(
-        ( TravelUUID = travel_cds-TravelUUID Description = |RELAX Time at { cl_abap_context_info=>get_system_time( ) TIME = USER }| ) ).
+        ( TravelUUID = travel_cds-TravelUUID Description = |{ TEXT-001 } { cl_abap_context_info=>get_system_time( ) TIME = USER }| ) ).
 
     MODIFY ENTITIES OF /DMO/R_Travel_D
            ENTITY Travel
            UPDATE FIELDS ( Description )
-           WITH travel_updates.
+           WITH travel_updates
+           FAILED DATA(failed_updates).
 
-    COMMIT ENTITIES. " IN SIMULATION MODE.
+    IF failed_updates IS INITIAL.
+      COMMIT ENTITIES. " IN SIMULATION MODE.
+      IF sy-subrc <> 0.
+        out->write( 'Unable to update Travels'(002) ).
+      ENDIF.
+    ENDIF.
 
     " RE-READ
     READ ENTITIES OF /DMO/R_Travel_D

@@ -35,7 +35,7 @@ ENDCLASS.
 
 CLASS zcl_ati_hello_world IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
-    out->write( 'Hello World' ).
+    out->write( 'Hello World' ) ##NO_TEXT.
 
     DATA orders TYPE TABLE OF order.
 
@@ -73,7 +73,7 @@ CLASS zcl_ati_hello_world IMPLEMENTATION.
                                                            cust_name  = `Customer E`
                                                            item_id    = '781029342'
                                                            purch_date = `20211216`
-                                                           proc_date  = `20211217` ) ).
+                                                           proc_date  = `20211217` ) ) ##NO_TEXT.
 
     LOOP AT customer_purchases REFERENCE INTO FINAL(customer_purchase) STEP -1
          WHERE purch_date <= `20211231` AND purch_date >= `20211001`.
@@ -86,7 +86,7 @@ CLASS zcl_ati_hello_world IMPLEMENTATION.
       FINAL(quarter) = 'Q4 2021'.
     ENDLOOP.
 
-    out->write( |Orders of all customers in { quarter }:| ).
+    out->write( |Orders of all customers in { quarter }:| ) ##NO_TEXT.
     out->write( orders ).
   ENDMETHOD.
 ENDCLASS.

@@ -26,11 +26,11 @@ CLASS zcl_ati_data IMPLEMENTATION.
     DATA variable TYPE p LENGTH 8 DECIMALS 2.
 
     " Output ----------------------------------------------------------------------
-    out->write( 'Result with Initial Value' ).
+    out->write( 'Result with Initial Value'(001) ).
     out->write( variable ).
     out->write( '---------' ).
     variable = '19891109'.
-    out->write( 'Result with Value 19891109' ).
+    out->write( 'Result with Value 19891109'(002) ).
     out->write( variable ).
     out->write( '---------' ).
 
@@ -43,26 +43,26 @@ CLASS zcl_ati_data IMPLEMENTATION.
 
     " Variable based on local type DATA my_variable TYPE my_type.
     DATA my_variable TYPE my_type.
-    out->write( `my_variable (TYPE MY_TYPE)` ).
+    out->write( `my_variable (TYPE MY_TYPE)` ) ##NO_TEXT.
     out->write( my_variable ).
 
     " Example 2: Global Types ----------------------------------------------------------------------
     " Variable based on global type .
     " Place cursor on variable and press F2 or F3
     DATA airport TYPE /dmo/airport_id VALUE 'FRA'.
-    out->write( `airport (TYPE /DMO/AIRPORT_ID )` ).
+    out->write( `airport (TYPE /DMO/AIRPORT_ID )` ) ##NO_TEXT.
     out->write( airport ).
 
     " Example 3: Constants ----------------------------------------------------------------------
-    CONSTANTS c_text   TYPE string VALUE `Hello World`.
+    CONSTANTS c_text   TYPE string VALUE `Hello World` ##NO_TEXT.
     CONSTANTS c_number TYPE i      VALUE 12345.
     " Uncomment this line to see syntax error ( VALUE is mandatory)
     " constants c_text2 type string.
 
-    out->write( `c_text (TYPE STRING)` ).
+    out->write( `c_text (TYPE STRING)` ) ##NO_TEXT.
     out->write( c_text ).
     out->write( '---------' ).
-    out->write( `c_number (TYPE I )` ).
+    out->write( `c_number (TYPE I )` ) ##NO_TEXT.
     out->write( c_number ).
     out->write( `---------` ).
 
