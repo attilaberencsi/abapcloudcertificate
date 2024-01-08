@@ -7,12 +7,11 @@
 CLASS lcl_carrier DEFINITION.
 
   PUBLIC SECTION.
-
     METHODS constructor
       IMPORTING i_carrier_id TYPE /dmo/carrier_id
       RAISING   cx_abap_invalid_value.
 
-    METHODS get_name RETURNING VALUE(r_result) TYPE /dmo/carrier_name.
+    METHODS get_name     RETURNING VALUE(r_result) TYPE /dmo/carrier_name.
     METHODS get_currency RETURNING VALUE(r_result) TYPE /dmo/currency_code.
 
 
@@ -29,19 +28,16 @@ CLASS lcl_carrier IMPLEMENTATION.
 * Method to be checked by the ATC
 
   METHOD constructor.
-
-    SELECT SINGLE
-        FROM /DMO/I_Carrier
-        FIELDS AirlineID    AS carrier_id,
-               Name         AS name,
-               CurrencyCode AS currency_code
-    WHERE AirlineID = @i_carrier_id
-    INTO CORRESPONDING FIELDS OF @me->carrier_data.
+    SELECT SINGLE FROM /DMO/I_Carrier
+      FIELDS AirlineID    AS carrier_id,
+             Name         AS name,
+             CurrencyCode AS currency_code
+      WHERE AirlineID = @i_carrier_id
+      INTO CORRESPONDING FIELDS OF @me->carrier_data.
 
     IF sy-subrc <> 0.
-      RAISE EXCEPTION TYPE cx_abap_invalid_value.
+      RAISE EXCEPTION NEW cx_abap_invalid_value( ).
     ENDIF.
-
   ENDMETHOD.
 
   METHOD get_currency.

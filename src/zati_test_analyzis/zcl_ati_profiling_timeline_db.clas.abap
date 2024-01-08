@@ -14,10 +14,7 @@ ENDCLASS.
 
 
 CLASS zcl_ati_profiling_timeline_db IMPLEMENTATION.
-
-
   METHOD if_oo_adt_classrun~main.
-
     CONSTANTS c_carrier_id TYPE /dmo/carrier_id VALUE 'LH'.
 
     TRY.
@@ -31,7 +28,6 @@ CLASS zcl_ati_profiling_timeline_db IMPLEMENTATION.
         out->write( |Carrier '{ c_carrier_id }' does not exist. | ).
 
     ENDTRY.
-
   ENDMETHOD.
 
 ENDCLASS.
