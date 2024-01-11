@@ -3,17 +3,19 @@
 *"* declarations
 
 CLASS lcl_demo DEFINITION.
+
   PUBLIC SECTION.
-
-
     METHODS use_work_area.
     METHODS use_field_symbol.
+
+  PROTECTED SECTION.
+
   PRIVATE SECTION.
     TYPES t_flights TYPE STANDARD TABLE OF /dmo/flight WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
 
-
     METHODS loop_field_symbol CHANGING c_flights TYPE t_Flights.
-    METHODS loop_Work_area CHANGING c_flights TYPE t_flights.
+    METHODS loop_Work_area    CHANGING c_flights TYPE t_flights.
+
 ENDCLASS.
 
 
@@ -53,17 +55,25 @@ CLASS lcl_flights DEFINITION.
     METHODS access_standard.
     METHODS access_sorted.
     METHODS access_hashed.
+    METHODS read_primary.
+    METHODS read_non_key.
+    METHODS read_secondary_1.
+    METHODS read_secondary_2.
+    METHODS read_secondary_3.
+
   PRIVATE SECTION.
+    DATA standard_table    TYPE STANDARD TABLE OF zati_flights WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
+    DATA sorted_table      TYPE SORTED TABLE OF zati_flights WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
+    DATA hashed_table      TYPE HASHED TABLE OF zati_flights WITH UNIQUE KEY carrier_id connection_id flight_date.
 
-
-    DATA standard_table TYPE STANDARD TABLE OF zati_flights WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
-    DATA sorted_table TYPE SORTED TABLE OF zati_flights WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
-    DATA hashed_table TYPE HASHED TABLE OF zati_flights WITH UNIQUE KEY carrier_id connection_id flight_date.
-
-
-    DATA key_carrier_id TYPE /dmo/carrier_id.
+    DATA key_carrier_id    TYPE /dmo/carrier_id.
     DATA key_connection_id TYPE /dmo/connection_id.
-    DATA key_date TYPE /dmo/flight_date.
+    DATA key_date          TYPE /dmo/flight_date.
+
+    DATA connections       TYPE SORTED TABLE OF Zati_flights WITH NON-UNIQUE KEY carrier_id connection_Id flight_date.
+    DATA connections_sk    TYPE SORTED TABLE OF Zati_flights WITH NON-UNIQUE KEY carrier_id connection_id flight_date
+    WITH NON-UNIQUE SORTED KEY k_plane COMPONENTS plane_type_id.
+
     METHODS set_line_to_read.
 
 
@@ -106,5 +116,35 @@ CLASS lcl_flights IMPLEMENTATION.
     key_date = line-flight_date.
   ENDMETHOD.
 
+
+  METHOD read_non_key.
+    LOOP AT connections INTO DATA(connection) WHERE plane_type_id = '737-800'.
+    ENDLOOP.
+  ENDMETHOD.
+
+
+  METHOD read_primary.
+    DATA count TYPE i VALUE 1.
+    LOOP AT connections INTO DATA(connection) WHERE carrier_id = 'LH' AND connection_id = '0405' .
+      count += 1.
+    ENDLOOP.
+  ENDMETHOD.
+
+
+  METHOD read_secondary_1.
+    LOOP AT connections_sk INTO DATA(connection) USING KEY k_plane WHERE plane_type_id = '737-800'.
+    ENDLOOP.
+  ENDMETHOD.
+
+
+  METHOD read_secondary_2.
+    LOOP AT connections_sk INTO DATA(connection) USING KEY k_plane WHERE plane_type_id = '737-800'.
+    ENDLOOP.
+  ENDMETHOD.
+
+  METHOD read_secondary_3.
+    LOOP AT connections_sk INTO DATA(connection) USING KEY k_plane WHERE plane_type_id = '737-800'.
+    ENDLOOP.
+  ENDMETHOD.
 
 ENDCLASS.
