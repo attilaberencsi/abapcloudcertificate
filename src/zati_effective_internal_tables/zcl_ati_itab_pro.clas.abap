@@ -24,7 +24,6 @@ ENDCLASS.
 CLASS zcl_ati_itab_pro IMPLEMENTATION.
 
   METHOD if_oo_adt_classrun~main.
-
     me->out = out.
 
     sorting_standard( ).
@@ -38,6 +37,16 @@ CLASS zcl_ati_itab_pro IMPLEMENTATION.
     field_symbols( ).
 
     access_performance_by_type( ).
+
+    DATA(flighty) = NEW lcl_flights( ).
+
+    flighty->read_primary( ).
+    flighty->read_non_key( ).
+    flighty->read_secondary_1( ).
+    flighty->read_secondary_2( ).
+    flighty->read_secondary_3( ).
+
+    out->write( 'Done' ).
 
   ENDMETHOD.
 
