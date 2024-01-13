@@ -15,7 +15,7 @@ ENDCLASS.
 
 CLASS zcl_ati_profiling_timeline_db IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
-    CONSTANTS c_carrier_id TYPE /dmo/carrier_id VALUE 'LH'.
+    CONSTANTS c_carrier_id TYPE c length 3 VALUE 'LH'.
 
     TRY.
         DO 10 TIMES.

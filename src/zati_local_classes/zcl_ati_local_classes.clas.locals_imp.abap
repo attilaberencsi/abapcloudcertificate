@@ -5,13 +5,13 @@ CLASS lcl_connection DEFINITION.
 
   PUBLIC SECTION.
     DATA:
-      carrier_id    TYPE /dmo/carrier_id,
-      connection_id TYPE /dmo/connection_id.
+      carrier_id    TYPE c length 3,
+      connection_id TYPE n length 4.
 
     METHODS constructor
       IMPORTING
-        i_carrier_id    TYPE /dmo/carrier_id
-        i_connection_id TYPE /dmo/connection_id
+        i_carrier_id    TYPE clike
+        i_connection_id TYPE clike
       RAISING
         cx_abap_invalid_value.
 

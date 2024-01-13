@@ -11,7 +11,7 @@ CLASS ltcl_unit IMPLEMENTATION.
 
   METHOD test_success.
 
-    SELECT SINGLE FROM /DMO/I_Carrier
+    SELECT SINGLE FROM ZATI_I_Carrier
       FIELDS AirlineID
       INTO @DATA(carrier_id).
 
@@ -34,9 +34,9 @@ CLASS ltcl_unit IMPLEMENTATION.
 
   METHOD test_exception.
     " Specify an incorrect Carrier
-    CONSTANTS c_wrong_carrier_id TYPE /dmo/carrier_id VALUE 'HU'.
+    CONSTANTS c_wrong_carrier_id TYPE c length 3 VALUE 'HU'.
 
-    SELECT SINGLE FROM /DMO/I_Carrier
+    SELECT SINGLE FROM ZATI_I_Carrier
       FIELDS AirlineID
       WHERE AirlineID = @c_wrong_carrier_id
     " TODO: variable is assigned but never used (ABAP cleaner)

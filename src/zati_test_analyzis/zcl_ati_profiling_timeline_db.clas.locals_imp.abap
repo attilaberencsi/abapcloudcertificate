@@ -8,18 +8,18 @@ CLASS lcl_carrier DEFINITION.
 
   PUBLIC SECTION.
     METHODS constructor
-      IMPORTING i_carrier_id TYPE /dmo/carrier_id
+      IMPORTING i_carrier_id TYPE clike
       RAISING   cx_abap_invalid_value.
 
-    METHODS get_name     RETURNING VALUE(r_result) TYPE /dmo/carrier_name.
-    METHODS get_currency RETURNING VALUE(r_result) TYPE /dmo/currency_code.
+    METHODS get_name     RETURNING VALUE(r_result) TYPE zati_carrier-name.
+    METHODS get_currency RETURNING VALUE(r_result) TYPE zati_carrier-currency_code.
 
 
   PROTECTED SECTION.
 
   PRIVATE SECTION.
 
-    DATA carrier_data TYPE /dmo/carrier.
+    DATA carrier_data TYPE zati_carrier.
 
 ENDCLASS.
 
@@ -28,7 +28,7 @@ CLASS lcl_carrier IMPLEMENTATION.
 * Method to be checked by the ATC
 
   METHOD constructor.
-    SELECT SINGLE FROM /DMO/I_Carrier
+    SELECT SINGLE FROM ZATI_I_Carrier
       FIELDS AirlineID    AS carrier_id,
              Name         AS name,
              CurrencyCode AS currency_code

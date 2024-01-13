@@ -3,8 +3,8 @@
 *"* declarations
 CLASS lcl_data DEFINITION.
   PUBLIC SECTION.
-    CLASS-METHODS get_carrier IMPORTING i_carrier_id        TYPE /dmo/carrier_id
-                              RETURNING VALUE(r_carrier_id) TYPE /dmo/carrier_id
+    CLASS-METHODS get_carrier IMPORTING i_carrier_id        TYPE clike
+                              RETURNING VALUE(r_carrier_id) TYPE ZATI_I_Carrier-AirlineID
                               RAISING   cx_abap_invalid_value.
 
  PROTECTED SECTION.
@@ -14,7 +14,7 @@ ENDCLASS.
 CLASS lcl_data IMPLEMENTATION.
 
   METHOD get_carrier.
-    SELECT SINGLE FROM /DMO/I_Carrier
+    SELECT SINGLE FROM ZATI_I_Carrier
       FIELDS AirlineID
       WHERE AirlineID = @i_carrier_id
       INTO @r_carrier_id.

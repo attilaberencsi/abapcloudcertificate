@@ -63,7 +63,7 @@ CLASS zcl_ati_abap_sql IMPLEMENTATION.
                WHEN 'D' THEN 'Deutsch'
                WHEN 'H' THEN 'Magyar'
                ELSE          ' '
-            END                         AS title_long
+            END                        AS title_long
 
       WHERE LanguageCode IN ( 'D', 'H' )
       INTO TABLE @DATA(result_simple).
@@ -80,7 +80,7 @@ CLASS zcl_ati_abap_sql IMPLEMENTATION.
                WHEN CountryISOCode = CountryThreeLetterISOCode THEN 'Same'
                WHEN CountryISOCode > CountryThreeLetterISOCode THEN 'More'
                ELSE 'This is impossible'
-             END                                                         AS Booking_State
+             END                                                           AS Booking_State
 
       INTO TABLE @DATA(result_complex).
 
@@ -91,25 +91,22 @@ CLASS zcl_ati_abap_sql IMPLEMENTATION.
     " ARITHMETIC EXPRESSIONS *                                            -
     " ---------------------------------------------------------------------
 
-* SELECT FROM /dmo/flight
-*         FIELDS seats_max,
-*                seats_occupied,
-*
-*                seats_max - seats_occupied           AS seats_avaliable,
-*
-*                (   CAST( seats_occupied AS FLTP )
-*                  * CAST( 100 AS FLTP )
-*                ) / CAST(  seats_max AS FLTP )       AS percentage_fltp
-*
-*           WHERE carrier_id = 'LH' AND connection_id = '0400'
-*            INTO TABLE @DATA(result).
-*
-*    out->write(
-*      EXPORTING
-*        data   = result
-*        name   = 'RESULT'
-*    ).
+    SELECT FROM zati_flights
+      FIELDS seats_max,
+             seats_occupied,
 
+             seats_max - seats_occupied         AS seats_avaliable,
+
+             (   CAST( seats_occupied AS FLTP )
+               * CAST( 100 AS FLTP ) )
+             / CAST(  seats_max AS FLTP )       AS percentage_fltp
+
+      WHERE carrier_id = 'LH' AND connection_id = '0400'
+               " TODO: variable is assigned but never used (ABAP cleaner)
+      INTO TABLE @DATA(cast_result).
+
+    out->write( data = result
+                name = 'RESULT' ).
 
 *    SELECT FROM /dmo/customer
 *         FIELDS customer_id,
@@ -136,47 +133,40 @@ CLASS zcl_ati_abap_sql IMPLEMENTATION.
 *    ).
 *
 ***********************************************************************
-*
-*    SELECT FROM /dmo/carrier
-*         FIELDS carrier_id,
-*                name,
-*                upper( name )   AS name_upper,
-*                lower( name )   AS name_lower,
-*                initcap( name ) AS name_initcap
-*
-*         WHERE carrier_id = 'SR'
-*          INTO TABLE @DATA(result_transform).
-*
-*    out->write(
-*      EXPORTING
-*        data   = result_transform
-*        name   = 'RESULT_TRANSLATE'
-*    ).
-*
-***********************************************************************
-*
-*  SELECT FROM /dmo/flight
-*       FIELDS flight_date,
-*              cast( flight_date as char( 8 ) )  AS flight_date_raw,
-*
-*              left( flight_Date, 4   )          AS year,
-*
-*              right(  flight_date, 2 )          AS day,
-*
-*              substring(  flight_date, 5, 2 )   AS month
-*
-*        WHERE carrier_id = 'LH'
-*          AND connection_id = '0400'
-*         INTO TABLE @DATA(result_substring).
-*
-*    out->write(
-*      EXPORTING
-*        data   = result_substring
-*        name   = 'RESULT_SUBSTRING'
-*    ).
 
+    SELECT FROM zati_carrier
+      FIELDS carrier_id,
+             name,
+             upper( name )   AS name_upper,
+             lower( name )   AS name_lower,
+             initcap( name ) AS name_initcap
 
-  "FUNCTIONS FOR PROCESSING DATES, TIMES, AND TIMESTAMPS
+      WHERE carrier_id = 'SR'
+      INTO TABLE @DATA(result_transform).
+
+    out->write( data = result_transform
+                name = 'RESULT_TRANSLATE' ).
+
+    " ----------------------------------------------------------------------
+
+    SELECT FROM zati_flights
+      FIELDS flight_date,
+             CAST( flight_date AS CHAR( 8 ) ) AS flight_date_raw,
+
+             left( flight_Date, 4   )         AS year,
+
+             right(  flight_date, 2 )         AS day,
+
+             substring(  flight_date, 5, 2 )  AS month
+
+      WHERE carrier_id    = 'LH'
+        AND connection_id = '0400'
+      INTO TABLE @DATA(result_substring).
+
+    out->write( data = result_substring
+                name = 'RESULT_SUBSTRING' ).
+
+    " FUNCTIONS FOR PROCESSING DATES, TIMES, AND TIMESTAMPS
 
 *    SELECT FROM /dmo/travel
 *         FIELDS begin_date,
@@ -202,8 +192,7 @@ CLASS zcl_ati_abap_sql IMPLEMENTATION.
 *        name   = 'RESULT'
 *    ).
 
-  "CONVERSION FUNCTIONS
-
+    " CONVERSION FUNCTIONS
 
 *  SELECT FROM /dmo/travel
 *         FIELDS lastchangedat,
@@ -251,24 +240,21 @@ CLASS zcl_ati_abap_sql IMPLEMENTATION.
 *
 *
 ***********************************************************************
-*
-*    SELECT FROM /dmo/connection
-*         FIELDS distance,
-*                distance_unit,
-*                unit_conversion( quantity = CAST( distance AS QUAN ),
-*                                 source_unit = distance_unit,
-*                                 target_unit = CAST( 'MI' AS UNIT ) )  AS distance_MI
-*
-*          WHERE airport_from_id = 'FRA'
-*           INTO TABLE @DATA(result_unit).
-*
-*    out->write(
-*      EXPORTING
-*        data   = result_unit
-*        name   = 'RESULT_UNIT'
-*    ).
 
+    SELECT FROM zati_conn
+         FIELDS distance,
+                distance_unit,
+                unit_conversion( quantity = CAST( distance AS QUAN ),
+                                 source_unit = distance_unit,
+                                 target_unit = CAST( 'MI' AS UNIT ) )  AS distance_MI
 
+          WHERE airport_from_id = 'FRA'
+           INTO TABLE @DATA(result_unit).
 
+    out->write(
+      EXPORTING
+        data   = result_unit
+        name   = 'RESULT_UNIT'
+    ).
   ENDMETHOD.
 ENDCLASS.

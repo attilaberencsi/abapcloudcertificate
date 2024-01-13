@@ -11,7 +11,7 @@ CLASS lcl_demo DEFINITION.
   PROTECTED SECTION.
 
   PRIVATE SECTION.
-    TYPES t_flights TYPE STANDARD TABLE OF /dmo/flight WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
+    TYPES t_flights TYPE STANDARD TABLE OF zati_flights WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
 
     METHODS loop_field_symbol CHANGING c_flights TYPE t_Flights.
     METHODS loop_Work_area    CHANGING c_flights TYPE t_flights.
@@ -23,14 +23,14 @@ CLASS lcl_demo IMPLEMENTATION.
 
   METHOD use_field_symbol.
     DATA flights TYPE t_flights.
-    SELECT FROM /dmo/flight FIELDS * INTO TABLE @flights.
+    SELECT FROM zati_flights FIELDS * INTO TABLE @flights.
     loop_field_symbol( CHANGING c_flights = flights ).
   ENDMETHOD.
 
 
   METHOD use_work_area.
     DATA flights TYPE t_flights.
-    SELECT FROM /dmo/flight FIELDS * INTO TABLE @flights.
+    SELECT FROM zati_flights FIELDS * INTO TABLE @flights.
     loop_work_area( CHANGING c_flights = flights ).
   ENDMETHOD.
 
@@ -66,9 +66,9 @@ CLASS lcl_flights DEFINITION.
     DATA sorted_table      TYPE SORTED TABLE OF zati_flights WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
     DATA hashed_table      TYPE HASHED TABLE OF zati_flights WITH UNIQUE KEY carrier_id connection_id flight_date.
 
-    DATA key_carrier_id    TYPE /dmo/carrier_id.
-    DATA key_connection_id TYPE /dmo/connection_id.
-    DATA key_date          TYPE /dmo/flight_date.
+    DATA key_carrier_id    TYPE zati_flights-carrier_id.
+    DATA key_connection_id TYPE zati_flights-connection_id.
+    DATA key_date          TYPE zati_flights-flight_date.
 
     DATA connections       TYPE SORTED TABLE OF Zati_flights WITH NON-UNIQUE KEY carrier_id connection_Id flight_date.
     DATA connections_sk    TYPE SORTED TABLE OF Zati_flights WITH NON-UNIQUE KEY carrier_id connection_id flight_date

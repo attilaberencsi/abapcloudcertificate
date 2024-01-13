@@ -15,12 +15,12 @@ ENDCLASS.
 
 CLASS zcl_ati_fill_flights IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
-    DATA flights    TYPE TABLE OF /dmo/flight.
-    DATA insert_tab TYPE TABLE OF /dmo/flight.
+    DATA flights    TYPE TABLE OF zati_flights.
+    DATA insert_tab TYPE TABLE OF zati_flights.
 
     DELETE FROM Zati_flights.
 
-    SELECT FROM /dmo/flight FIELDS * ORDER BY carrier_Id, connection_id INTO TABLE @flights.
+    SELECT FROM zati_flights FIELDS * ORDER BY carrier_Id, connection_id INTO TABLE @flights.
 
     LOOP AT flights INTO DATA(first_date).
       " Original table flights has 2 flights per connection. Only process the first
@@ -35,10 +35,10 @@ CLASS zcl_ati_fill_flights IMPLEMENTATION.
     ENDLOOP.
 
     " Read highest connection number for each flight
-    SELECT FROM /dmo/flight AS main
+    SELECT FROM zati_flights AS main
       FIELDS carrier_Id, connection_id, flight_date, price, currency_code, plane_type_id
-      WHERE connection_id = ( SELECT MAX( connection_id ) FROM /dmo/flight WHERE carrier_id = main~carrier_id )
-        AND flight_Date   = ( SELECT MIN( flight_date ) FROM /dmo/flight
+      WHERE connection_id = ( SELECT MAX( connection_id ) FROM zati_flights WHERE carrier_id = main~carrier_id )
+        AND flight_Date   = ( SELECT MIN( flight_date ) FROM zati_flights
                                 WHERE carrier_id = main~carrier_id AND connection_id = main~connection_id )
       GROUP BY carrier_id, connection_Id, flight_date, price, currency_code, plane_type_id
       ORDER BY carrier_id, connection_id
