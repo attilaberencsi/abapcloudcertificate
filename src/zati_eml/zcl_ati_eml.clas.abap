@@ -5,15 +5,15 @@ CLASS zcl_ati_eml DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
-
     INTERFACES if_oo_adt_classrun .
-  PROTECTED SECTION.
+
   PRIVATE SECTION.
 ENDCLASS.
 
 
 CLASS zcl_ati_eml IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
+
 *    DATA travel_read_keys   TYPE TABLE FOR READ IMPORT /DMO/R_Travel_D.
 *    DATA travel_read_result TYPE TABLE FOR READ RESULT /DMO/R_Travel_D.
 *    DATA travel_updates     TYPE TABLE FOR UPDATE /DMO/R_Travel_D.
