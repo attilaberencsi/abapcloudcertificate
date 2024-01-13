@@ -102,12 +102,12 @@ CLASS lhc_connection IMPLEMENTATION.
          RESULT DATA(connections).
 
     LOOP AT connections INTO DATA(connection).
-      SELECT SINGLE FROM /DMO/I_Airport
+      SELECT SINGLE FROM ZATI_I_Airport
         FIELDS city, CountryCode
         WHERE AirportID = @connection-AirportFromID
         INTO ( @connection-CityFrom, @connection-CountryTo ).
 
-      SELECT SINGLE FROM /DMO/I_Airport
+      SELECT SINGLE FROM ZATI_I_Airport
         FIELDS city,
                CountryCode
         WHERE AirportID = @connection-AirportToID

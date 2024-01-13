@@ -1,15 +1,15 @@
 "! <p class="shorttext synchronized" lang="en">ABAP Unit Test</p>
 CLASS zcl_ati_abap_unit_test DEFINITION PUBLIC FINAL CREATE PUBLIC.
- PUBLIC SECTION.
-  INTERFACES if_oo_adt_classrun.
+  PUBLIC SECTION.
+    INTERFACES if_oo_adt_classrun.
 
- PROTECTED SECTION.
- PRIVATE SECTION.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 CLASS zcl_ati_abap_unit_test IMPLEMENTATION.
   METHOD if_oo_adt_classrun~main.
-    CONSTANTS c_carrier_id TYPE /dmo/carrier_id VALUE 'AA'.
+    CONSTANTS c_carrier_id TYPE c LENGTH 3 VALUE 'AA'.
 
     TRY.
         DATA(carrier) = lcl_data=>get_carrier( i_carrier_id = c_carrier_id ).

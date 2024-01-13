@@ -49,7 +49,7 @@ CLASS zcl_ati_data IMPLEMENTATION.
     " Example 2: Global Types ----------------------------------------------------------------------
     " Variable based on global type .
     " Place cursor on variable and press F2 or F3
-    DATA airport TYPE /dmo/airport_id VALUE 'FRA'.
+    DATA airport TYPE c LENGTH 3 VALUE 'FRA'.
     out->write( `airport (TYPE /DMO/AIRPORT_ID )` ) ##NO_TEXT.
     out->write( airport ).
 

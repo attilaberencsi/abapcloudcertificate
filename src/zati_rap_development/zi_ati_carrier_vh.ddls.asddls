@@ -3,7 +3,7 @@
 @Search.searchable: true
 
 define view entity ZI_ATI_Carrier_VH
-  as select from /DMO/I_Carrier
+  as select from ZATI_I_Carrier
 {
 
       @Search.defaultSearchElement: true

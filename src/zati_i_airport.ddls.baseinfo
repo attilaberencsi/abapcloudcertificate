@@ -3,12 +3,12 @@
 {
 "FROM":
 [
-"I_CURRENCY",
-"I_CURRENCYTEXT",
-"ZATI_I_CARRIER"
+"ZATI_AIRPORT"
 ],
 "ASSOCIATED":
-[],
+[
+"I_COUNTRY"
+],
 "BASE":
 [],
 "ANNO_REF":

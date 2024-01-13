@@ -51,7 +51,7 @@ CLASS zcl_ati_itab_pro IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD sorting_standard.
-    TYPES t_flights TYPE STANDARD TABLE OF /dmo/flight WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
+    TYPES t_flights TYPE STANDARD TABLE OF zati_flights WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
     DATA flights TYPE t_flights.
 
     flights = VALUE #(
@@ -97,7 +97,7 @@ CLASS zcl_ati_itab_pro IMPLEMENTATION.
   METHOD duplicate_records.
 
 
-    TYPES t_flights TYPE STANDARD TABLE OF /dmo/flight WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
+    TYPES t_flights TYPE STANDARD TABLE OF zati_flights WITH NON-UNIQUE KEY carrier_id connection_id flight_date.
     DATA: flights TYPE t_flights.
 
 
@@ -141,24 +141,24 @@ CLASS zcl_ati_itab_pro IMPLEMENTATION.
   METHOD table_comprehension.
 
     TYPES: BEGIN OF t_connection,
-             carrier_id             TYPE /dmo/carrier_id,
-             connection_id          TYPE /dmo/connection_id,
-             departure_airport      TYPE /dmo/airport_from_id,
-             departure_airport_Name TYPE /dmo/airport_Name,
+             carrier_id             TYPE zati_flights-carrier_id,
+             connection_id          TYPE zati_flights-connection_id,
+             departure_airport      TYPE c LENGTH 3,
+             departure_airport_Name TYPE c LENGTH 40,
            END OF t_connection.
 
     TYPES t_connections TYPE STANDARD TABLE OF t_connection WITH NON-UNIQUE KEY carrier_id connection_id.
 
-    DATA connections  TYPE TABLE OF /dmo/connection.
-    DATA airports     TYPE TABLE OF /dmo/airport.
+    DATA connections  TYPE TABLE OF zati_conn.
+    DATA airports     TYPE TABLE OF zati_airport.
     DATA result_table TYPE t_connections.
 
     " Aim of the method:
     " Read a list of connections from the database and use them to fill an internal table result_table.
     " This contains some data from the table connections and adds the name of the departure airport.
 
-    SELECT FROM /dmo/airport FIELDS * INTO TABLE @airports.
-    SELECT FROM /dmo/connection FIELDS * INTO TABLE @connections.
+    SELECT FROM zati_airport FIELDS * INTO TABLE @airports.
+    SELECT FROM zati_conn FIELDS * INTO TABLE @connections.
 
     out->write( 'Connection Table' ).
     out->write( '________________' ).
@@ -183,19 +183,19 @@ CLASS zcl_ati_itab_pro IMPLEMENTATION.
 
   METHOD reduce.
     TYPES: BEGIN OF t_results,
-             occupied TYPE /dmo/plane_seats_occupied,
-             maximum  TYPE /dmo/plane_seats_max,
+             occupied TYPE zati_flights-seats_occupied,
+             maximum  TYPE zati_flights-seats_max,
            END OF t_results.
 
     TYPES: BEGIN OF t_results_with_Avg,
-             occupied TYPE /dmo/plane_seats_occupied,
-             maximum  TYPE /dmo/plane_seats_max,
+             occupied TYPE zati_flights-seats_occupied,
+             maximum  TYPE zati_flights-seats_max,
              average  TYPE p LENGTH 16 DECIMALS 2,
            END OF t_results_with_avg.
 
-    DATA flights TYPE TABLE OF /dmo/flight.
+    DATA flights TYPE TABLE OF zati_flights.
 
-    SELECT FROM /dmo/flight FIELDS * INTO TABLE @flights.
+    SELECT FROM zati_flights FIELDS * INTO TABLE @flights.
 
     " Result is a scalar data type
     DATA(sum) = REDUCE i( INIT total = 0 FOR line IN flights NEXT total = total + line-seats_occupied ).
