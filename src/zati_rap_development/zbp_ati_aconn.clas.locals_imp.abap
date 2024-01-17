@@ -69,7 +69,6 @@ CLASS lhc_connection IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD CheckOriginDestination.
-
     READ ENTITIES OF zr_ati_aconn IN LOCAL MODE
          ENTITY Connection
          FIELDS ( AirportFromID AirportToID )
@@ -83,7 +82,8 @@ CLASS lhc_connection IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
-      MESSAGE ID 'ZATI_CONN' TYPE 'E' NUMBER  '003' INTO DATA(dummy).
+      " TODO: variable is assigned but never used; add pragma ##NEEDED (ABAP cleaner)
+      MESSAGE ID 'ZATI_CONN' TYPE 'E' NUMBER '003' INTO DATA(dummy).
       DATA(message) = new_message( id       = 'ZATI_CONN'
                                    number   = '003'
                                    severity = ms-error ).
