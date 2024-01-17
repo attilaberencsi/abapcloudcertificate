@@ -241,19 +241,16 @@ CLASS zcl_ati_abap_sql IMPLEMENTATION.
 ***********************************************************************
 
     SELECT FROM zati_conn
-         FIELDS distance,
-                distance_unit,
-                unit_conversion( quantity = CAST( distance AS QUAN ),
-                                 source_unit = distance_unit,
-                                 target_unit = CAST( 'MI' AS UNIT ) )  AS distance_MI
+      FIELDS distance,
+             distance_unit,
+             unit_conversion( quantity = CAST( distance AS QUAN ),
+                              source_unit = distance_unit,
+                              target_unit = CAST( 'MI' AS UNIT ) ) AS distance_MI
 
-          WHERE airport_from_id = 'FRA'
-           INTO TABLE @DATA(result_unit).
+      WHERE airport_from_id = 'FRA'
+      INTO TABLE @DATA(result_unit).
 
-    out->write(
-      EXPORTING
-        data   = result_unit
-        name   = 'RESULT_UNIT'
-    ).
+    out->write( data = result_unit
+                name = 'RESULT_UNIT' ).
   ENDMETHOD.
 ENDCLASS.
