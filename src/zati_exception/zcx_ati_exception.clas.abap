@@ -9,9 +9,9 @@ CLASS zcx_ati_exception DEFINITION
     CONSTANTS:
       BEGIN OF zcx_ati_exception,
         msgid TYPE symsgid      VALUE 'ZATI_EX',
-        msgno TYPE symsgno      VALUE '001',
+        msgno TYPE symsgno      VALUE '006',
         attr1 TYPE scx_attrname VALUE 'AIRLINEID',
-        attr2 TYPE scx_attrname VALUE 'CONNECTION_ID',
+        attr2 TYPE scx_attrname VALUE 'attr3',
         attr3 TYPE scx_attrname VALUE 'attr3',
         attr4 TYPE scx_attrname VALUE 'attr4',
       END OF zcx_ati_exception.

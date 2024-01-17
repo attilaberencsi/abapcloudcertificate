@@ -11,7 +11,9 @@
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
+    <RSTAT>K</RSTAT>
     <CLSDEFINT>ZR_ATI_ACONN</CLSDEFINT>
+    <MSG_ID>ZATI_CONN</MSG_ID>
    </VSEOCLASS>
   </asx:values>
  </asx:abap>
