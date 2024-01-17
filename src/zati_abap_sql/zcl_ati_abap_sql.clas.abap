@@ -7,7 +7,6 @@ CLASS zcl_ati_abap_sql DEFINITION
   PUBLIC SECTION.
 
     INTERFACES if_oo_adt_classrun .
-  PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
 
