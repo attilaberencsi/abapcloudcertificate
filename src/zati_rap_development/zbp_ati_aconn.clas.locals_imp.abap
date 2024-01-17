@@ -48,7 +48,7 @@ CLASS lhc_connection IMPLEMENTATION.
 
       IF check_result IS NOT INITIAL.
         "Records with the same semantic key found, reject save
-        MESSAGE e001 INTO DATA(dummy).
+        MESSAGE ID 'ZATI_CONN' TYPE 'E' NUMBER '001' INTO DATA(dummy).
 
         DATA(message) = new_message( id       = 'ZATI_CONN'
                                      number   = '001'
@@ -83,7 +83,7 @@ CLASS lhc_connection IMPLEMENTATION.
         CONTINUE.
       ENDIF.
 
-      MESSAGE e003 INTO DATA(dummy).
+      MESSAGE ID 'ZATI_CONN' TYPE 'E' NUMBER  '003' INTO DATA(dummy).
       DATA(message) = new_message( id       = 'ZATI_CONN'
                                    number   = '003'
                                    severity = ms-error ).

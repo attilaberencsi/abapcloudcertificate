@@ -17,12 +17,6 @@
     <T100>
      <SPRSL>E</SPRSL>
      <ARBGB>ZATI_CONN</ARBGB>
-     <MSGNR>002</MSGNR>
-     <TEXT>Airline &amp;1 does not exist</TEXT>
-    </T100>
-    <T100>
-     <SPRSL>E</SPRSL>
-     <ARBGB>ZATI_CONN</ARBGB>
      <MSGNR>003</MSGNR>
      <TEXT>Departure and destination airports must be different</TEXT>
     </T100>
