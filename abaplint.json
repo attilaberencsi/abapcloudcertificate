@@ -119,7 +119,7 @@
     "check_comments": {
       "exclude": [],
       "severity": "Error",
-      "allowEndOfLine": false
+      "allowEndOfLine": true
     },
     "check_ddic": {
       "exclude": [],
