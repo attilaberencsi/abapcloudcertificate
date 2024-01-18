@@ -512,19 +512,7 @@
       "exclude": [],
       "severity": "Error",
       "length": 120
-    },
-    "keyword_case": {
-      "exclude": [],
-      "severity": "Error",
-      "style": "upper",
-      "ignoreExceptions": true,
-      "ignoreLowerClassImplmentationStatement": true,
-      "ignoreGlobalClassDefinition": false,
-      "ignoreGlobalInterface": false,
-      "ignoreFunctionModuleName": false,
-      "ignoreGlobalClassBoundaries": false,
-      "ignoreKeywords": []
-    },
+    },    
     "line_break_multiple_parameters": {
       "exclude": [],
       "severity": "Error",
