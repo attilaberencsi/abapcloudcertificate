@@ -86,7 +86,7 @@
     },
     "cds_legacy_view": {
       "exclude": [],
-      "severity": "Error"
+      "severity": "Warning"
     },
     "cds_parser_error": {
       "exclude": [],
