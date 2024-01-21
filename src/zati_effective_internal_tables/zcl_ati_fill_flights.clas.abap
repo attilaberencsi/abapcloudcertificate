@@ -18,9 +18,11 @@ CLASS zcl_ati_fill_flights IMPLEMENTATION.
     DATA flights    TYPE TABLE OF zati_flights.
     DATA insert_tab TYPE TABLE OF zati_flights.
 
+    "Wipe current dataset
     DELETE FROM Zati_flights.
 
-    SELECT FROM zati_flights FIELDS * ORDER BY carrier_Id, connection_id INTO TABLE @flights.
+    "Fetch reference data
+    "SELECT FROM /dmo/flight FIELDS * ORDER BY carrier_Id, connection_id INTO CORRESPONDING FIELDS OF TABLE @flights.
 
     LOOP AT flights INTO DATA(first_date).
       " Original table flights has 2 flights per connection. Only process the first
@@ -68,7 +70,7 @@ CLASS zcl_ati_fill_flights IMPLEMENTATION.
     DELETE ADJACENT DUPLICATES FROM insert_tab COMPARING carrier_id connection_id flight_date.
 
     INSERT Zati_flights FROM TABLE @insert_tab.
-    out->write( |Generated { sy-dbcnt } rows in table ZS4D401_flights| ).
+    out->write( |Generated { sy-dbcnt } rows in table zati_flights| ).
 
   ENDMETHOD.
 

@@ -1,0 +1,13 @@
+@EndUserText.label: 'Department Viewer'
+@MappingRole: true
+define role ZATI_C_DEPARTMENTVIEWER {
+  grant 
+    select
+      on
+        ZATI_C_DEPARTMENT
+          where
+            (DepartmentId) = aspect pfcg_auth(ZATIDEPMNT, 
+                                              ZATIDEPMNT,
+                                              ACTVT = '03');
+            
+}
