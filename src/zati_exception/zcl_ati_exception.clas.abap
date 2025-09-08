@@ -11,7 +11,8 @@ CLASS zcl_ati_exception DEFINITION
   PRIVATE SECTION.
     CONSTANTS c_raise_custom TYPE abap_bool VALUE abap_false.
     DATA out TYPE REF TO if_oo_adt_classrun_out.
-    METHODS raise_custom_exception.
+    METHODS raise_custom_exception
+      RAISING zcx_ati_exception .
 
 ENDCLASS.
 

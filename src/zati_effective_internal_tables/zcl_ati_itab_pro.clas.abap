@@ -118,7 +118,7 @@ CLASS zcl_ati_itab_pro IMPLEMENTATION.
     DELETE ADJACENT DUPLICATES FROM flights.
     out->write( 'Contents after DELETE ADJACENT DUPLICATES' ).
     out->write( 'Nothing deleted - key values are not adjacent' ).
-    out->write( 'Sort the table before DELETE ADJACENT DUPLICATES').
+    out->write( 'Sort the table before DELETE ADJACENT DUPLICATES' ).
     out->write( flights ).
     out->write( ` ` ).
 

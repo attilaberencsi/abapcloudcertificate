@@ -4,6 +4,8 @@
   <asx:values>
    <DEVC>
     <CTEXT>Working With Basic Data Objects and Data Types</CTEXT>
+    <LANGUAGE>E</LANGUAGE>
+    <MASTERLANG>E</MASTERLANG>
    </DEVC>
   </asx:values>
  </asx:abap>
